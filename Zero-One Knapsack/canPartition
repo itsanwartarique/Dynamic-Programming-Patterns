@@ -1,0 +1,16 @@
+class Solution:
+    def canPartition(self, nums: List[int]) -> bool:
+        s = sum(nums)
+        if s%2: return False
+        target = s//2
+        cache = {}
+        n = len(nums)
+        def dp(nums,index,target):
+            #base case
+            if target ==0: return True
+            if index >= n or target < 0: return False
+    
+            if (index,target) not in cache:
+                cache[(index,target)] = dp(nums,index+1,target-nums[index]) or dp(nums,index+1,target) 
+            return cache[(index,target)]
+        return dp(nums,0,target)
